@@ -21,7 +21,13 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "baseUrl": "src",
+    "paths": {
+      "@shared/*" : ["app/shared/*"],
+      "@pipes/*": ["app/shared/modules/pipes-module/*"],
+      "@services/*": ["app/shared/services/*"],
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
