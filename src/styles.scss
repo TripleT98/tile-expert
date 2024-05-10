@@ -1,15 +1,34 @@
 @import "@angular/material/prebuilt-themes/pink-bluegrey.css";
-@import "./assets/scss/variables.scss";
+@import "variables.scss";
 @import "./assets/scss/material/material.scss";
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400;500;600;700&display=swap');
 
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Roboto;
 }
 
 body{
   height: 100vh;
   width: 100vw;
+}
+
+$scroll-bar-size: 6px;
+
+*::-webkit-scrollbar-thumb {
+  background-color: $main-color-2;
+  border-radius: calc($scroll-bar-size / 2);
+  width: calc($scroll-bar-size / 2);
+}
+
+*::-webkit-scrollbar-track {
+  background-color: $main-color;
+  border: 1px solid $main-color;
+}
+
+*::-webkit-scrollbar {
+  height: $scroll-bar-size;
+  width: $scroll-bar-size;
 }

@@ -1,3 +1,51 @@
 <div class="main-header">
-
+  <div #titleCont>
+    <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: 'title'}"></ng-container>
+  </div>
+  <ng-container [ngTemplateOutlet]="navBarTemp"></ng-container>
+  <ng-container [ngTemplateOutlet]="searchBlock"></ng-container>
+  <ng-container [ngTemplateOutlet]="sideBlock"></ng-container>
 </div>
+
+<ng-template #navBarTemp>
+  <div class="nav-bar">
+    <div *ngFor="let item of navBarItems" class="nav-bar_item">
+      <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: item.iconName}"></ng-container>
+      <span>{{item.name}}</span>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #searchBlock>
+  <div class="search-block">
+    <div #searchContainer>
+      <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: 'search'}"></ng-container>
+    </div>
+    <div
+      #inputContainer
+      class="expanded input-container"
+      [expandedItem]="inputContainer"
+      [expandTo]="titleCont"
+      [expandTrigger]="searchContainer"
+      [triggerEvent]="'click'"
+    >
+      <input type="text">
+    </div>
+    <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: 'add'}"></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #sideBlock>
+  <div class="side-block">
+    <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: 'alarm'}"></ng-container>
+    <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: 'ava'}"></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #svgIconTemp let-name="name">
+  <div class="svg-icon">
+    <app-svg-icon [name]="name"></app-svg-icon>
+  </div>
+<ng-template>
+
+
