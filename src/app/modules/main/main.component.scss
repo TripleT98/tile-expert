@@ -51,13 +51,24 @@
     cursor: pointer;
   }
   .expanded{
+    @include flexCenter;
     position: absolute;
     right: 34px;
-    width: 10px;
-    height: 10px;
-    background: red;
-    input{
-      display: none;
+    width: 0px;
+    height: 48px;
+    background: #FFF;
+    overflow: hidden;
+    border-radius: 4px;
+    .input{
+      flex-grow: 1;
+    }
+    &.expanded{
+      transition-duration: $anim-dur;
+      opacity: 1;
+    }
+    &.closed{
+      transition-duration: $anim-dur;
+      opacity: 0;
     }
   }
 }
@@ -70,5 +81,7 @@
   top: 0px;
   height: 100%;
 }
+
+
 
 

@@ -1,4 +1,4 @@
-import { Directive, Input, ElementRef, Renderer2, OnInit } from "@angular/core";
+import { Directive, Input, Output, EventEmitter, Renderer2, OnInit } from "@angular/core";
 import { Observable, fromEvent, Subscription, merge } from "rxjs";
 import { map, filter, take } from 'rxjs/operators';
 
@@ -43,6 +43,8 @@ export class ExpandDirective implements OnInit {
     this._triggerEvent = event;
   }
 
+  @Output() statusChange = new EventEmitter<AnimStatus>()
+
   constructor(
     private renderer2: Renderer2,
   ){
@@ -51,7 +53,7 @@ export class ExpandDirective implements OnInit {
 
   ngOnInit(): void {
     if (!this._expandTo || !this._expandedItem || !this._expandTrigger || !this._triggerEvent){
-      console.log("Не хватает некотрох составляющих");
+      console.warn("Не хватает некотрох составляющих");
       return;
     }
     this.listenTrigger();
@@ -60,10 +62,18 @@ export class ExpandDirective implements OnInit {
   private listenTrigger(){
     this.expandSubscriber?.unsubscribe();
     this.expandSubscriber = fromEvent(this._expandTrigger, this._triggerEvent).subscribe(event => {
-      this.processStatus = AnimStatus["forward"];
+      this.setAnimStatus(AnimStatus["forward"])
       this.expand()
-      setTimeout(() => fromEvent(window, 'click').pipe(take(1)).subscribe(_ => {
-        this.processStatus = AnimStatus["backward"];
+      setTimeout(() => fromEvent(window, 'click').pipe(
+        filter(event => {
+          const target = event.target;
+          const isContains = this._expandedItem.contains(event.target as any);
+          return !isContains;
+        }),
+        take(1)
+      )
+      .subscribe(event => {
+        this.setAnimStatus(AnimStatus["backward"])
         this.expand()
       }), 100)
     })
@@ -93,19 +103,25 @@ export class ExpandDirective implements OnInit {
       this.renderer2.setStyle(this._expandedItem, 'width', `${newWidth}px`);
       this.currWidth = newWidth;
       const {x: newX} = this._expandedItem.getBoundingClientRect();
-      if (newX <= x1 && this.processStatus === AnimStatus["forward"]) {
+      console.log(this._expandedItem.style.width);
+      if (newX <= (x1 + 16) && this.processStatus === AnimStatus["forward"]) {
         clearInterval(this.expandAnimationInterval);
-        this.processStatus = AnimStatus["stopped"];
+        this.setAnimStatus(AnimStatus["stopped"])
       } else if (newWidth <= this.initialWidth && this.processStatus === AnimStatus["backward"]) {
         clearInterval(this.expandAnimationInterval);
-        this.processStatus = AnimStatus["stopped"];
+        this.setAnimStatus(AnimStatus["stopped"])
       }
     }, 2)
   }
 
+  private setAnimStatus(status: AnimStatus){
+    this.processStatus = status;
+    this.statusChange.emit(this.processStatus);
+  }
+
 }
 
-enum AnimStatus {
+export enum AnimStatus {
   "forward" = 1,
   "stopped" = 0,
   "backward"= -1,

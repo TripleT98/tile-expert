@@ -1,5 +1,7 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { NavBarItem } from '@shared/models/nav-bar-item.model';
+import { AnimStatus } from '@shared/modules/directives-module/expand.directive';
 
 @Component({
   selector: 'app-main',
@@ -9,6 +11,9 @@ import { NavBarItem } from '@shared/models/nav-bar-item.model';
 export class MainComponent implements AfterViewInit {
 
   @ViewChild('titleCont') titleContainer!: ElementRef;
+
+  protected readonly searchForm = new FormControl(null);
+  protected searchFiedStatus: AnimStatus = AnimStatus['stopped'];
 
   protected navBarItems: NavBarItem[] = [
     {
@@ -39,6 +44,11 @@ export class MainComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(){
+  }
+
+  onExpand(status: AnimStatus){
+    console.log(status)
+    this.searchFiedStatus = status
   }
 
 }

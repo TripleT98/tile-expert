@@ -15,8 +15,6 @@ body{
   width: 100vw;
 }
 
-$scroll-bar-size: 6px;
-
 *::-webkit-scrollbar-thumb {
   background-color: $main-color-2;
   border-radius: calc($scroll-bar-size / 2);

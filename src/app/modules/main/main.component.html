@@ -28,8 +28,12 @@
       [expandTo]="titleCont"
       [expandTrigger]="searchContainer"
       [triggerEvent]="'click'"
+      (statusChange)="onExpand($event)"
     >
-      <input type="text">
+      <mat-form-field appearance="outline" class="search input">
+        <input matInput [formControl]="searchForm" type="text">
+      </mat-form-field>
+      <button mat-raised-button class="search">НАЙТИ</button>
     </div>
     <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: 'add'}"></ng-container>
   </div>
