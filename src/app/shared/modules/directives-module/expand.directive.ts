@@ -9,6 +9,7 @@ import { map, filter, take } from 'rxjs/operators';
 export class ExpandDirective implements OnInit {
 
   private expandSubscriber!: Subscription;
+  private expandStatus: boolean = false;
   private processStatus: AnimStatus = AnimStatus["stopped"];
   private expandAnimationInterval!: NodeJS.Timeout;
   private readonly step = 8;
@@ -25,7 +26,15 @@ export class ExpandDirective implements OnInit {
   @Input()
   set expandedItem(element: HTMLElement){
     this.initialWidth = element.getBoundingClientRect().width;
+    const resizeObs = new ResizeObserver((data) => {this.listenResize(data)});
+    resizeObs.observe(document.body);
     this._expandedItem  = element;
+  }
+
+  private listenResize(data: any){
+    if (this.expandStatus) {
+      this.setWidth();
+    }
   }
 
   @Input()
@@ -105,19 +114,34 @@ export class ExpandDirective implements OnInit {
       this.currWidth = newWidth;
       const {x: newX} = this._expandedItem.getBoundingClientRect();
       if (newX <= (x1 + 16) && this.processStatus === AnimStatus["forward"]) {
+        const diff = newX - (x1 + 16);
+        this.renderer2.setStyle(this._expandedItem, 'width', `${newWidth + diff}px`);
         clearInterval(this.expandAnimationInterval);
         this.setAnimStatus(AnimStatus["stopped"]);
       } else if (newWidth <= this.initialWidth && this.processStatus === AnimStatus["backward"]) {
+        this.renderer2.setStyle(this._expandedItem, 'width', `${0}px`)
         clearInterval(this.expandAnimationInterval);
         this.setAnimStatus(AnimStatus["stopped"]);
       }
     }, 2)
   }
 
+  private setWidth(){
+    const {width, x} = this._expandTo.getBoundingClientRect();
+    const {x: targetX, width: targetWidth} = this._expandedItem.getBoundingClientRect();
+    const x1 = x + width;
+    const dx = targetX - (x + width + 16);
+    const newWidth = targetWidth + dx;
+    this.renderer2.setStyle(this._expandedItem, 'width', `${newWidth}px`);
+    this.currWidth = newWidth;
+  }
+
   private setAnimStatus(status: AnimStatus){
     if (this.processStatus === AnimStatus["forward"] && status === AnimStatus["stopped"]) {
+      this.expandStatus = true;
       this.expandStatusChange.emit(true);
     } else if (this.processStatus === AnimStatus["backward"] && status === AnimStatus["stopped"]) {
+      this.expandStatus = false;
       this.expandStatusChange.emit(false);
     }
     this.processStatus = status;

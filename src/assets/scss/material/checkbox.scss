@@ -3,5 +3,8 @@
 .mat-mdc-checkbox{
   .mdc-label{
     color: $text-color;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }

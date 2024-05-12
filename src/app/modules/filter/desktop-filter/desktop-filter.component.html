@@ -40,13 +40,15 @@
 <ng-template #singleSelect>
   <div class="single select">
     <p>Только</p>
-    <mat-checkbox
+    <div class="checkboxes">
+      <mat-checkbox
       *ngFor="let item of filterModel.singleSelectItems"
       [formControl]="filterModel.filterForm.controls.singleSelect.controls['' + item.id]"
       (change)="filterModel.singleFormChange(item.id)"
     >
       {{item.name}}
     </mat-checkbox>
+    </div>
   </div>
 </ng-template>
 
@@ -54,7 +56,7 @@
   <div class="history">
     <h3>История</h3>
     <ul>
-      <li *ngFor="let item of filterModel.history">{{item}}</li>
+      <li *ngFor="let item of filterModel.history" [matTooltip]="item">{{item}}</li>
     </ul>
   </div>
 </ng-template>

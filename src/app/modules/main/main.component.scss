@@ -85,8 +85,13 @@
 
 .dropdown{
   position: absolute;
-  top: 50px;
+  top: 53px;
 }
 
+.invisible{
+  width: 100px;
+  height: 100%;
+  flex-shrink: 0;
+}
 
 
