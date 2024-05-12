@@ -43,7 +43,8 @@ export class ExpandDirective implements OnInit {
     this._triggerEvent = event;
   }
 
-  @Output() statusChange = new EventEmitter<AnimStatus>()
+  @Output() statusChange = new EventEmitter<AnimStatus>();
+  @Output() expandStatusChange = new EventEmitter<boolean>();
 
   constructor(
     private renderer2: Renderer2,
@@ -103,20 +104,25 @@ export class ExpandDirective implements OnInit {
       this.renderer2.setStyle(this._expandedItem, 'width', `${newWidth}px`);
       this.currWidth = newWidth;
       const {x: newX} = this._expandedItem.getBoundingClientRect();
-      console.log(this._expandedItem.style.width);
       if (newX <= (x1 + 16) && this.processStatus === AnimStatus["forward"]) {
         clearInterval(this.expandAnimationInterval);
-        this.setAnimStatus(AnimStatus["stopped"])
+        this.setAnimStatus(AnimStatus["stopped"]);
       } else if (newWidth <= this.initialWidth && this.processStatus === AnimStatus["backward"]) {
         clearInterval(this.expandAnimationInterval);
-        this.setAnimStatus(AnimStatus["stopped"])
+        this.setAnimStatus(AnimStatus["stopped"]);
       }
     }, 2)
   }
 
   private setAnimStatus(status: AnimStatus){
+    if (this.processStatus === AnimStatus["forward"] && status === AnimStatus["stopped"]) {
+      this.expandStatusChange.emit(true);
+    } else if (this.processStatus === AnimStatus["backward"] && status === AnimStatus["stopped"]) {
+      this.expandStatusChange.emit(false);
+    }
     this.processStatus = status;
     this.statusChange.emit(this.processStatus);
+
   }
 
 }

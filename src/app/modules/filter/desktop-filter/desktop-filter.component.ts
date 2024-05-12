@@ -5,12 +5,11 @@ import { FilterViewModel } from '../filter.model';
   selector: 'app-desctop-filter',
   templateUrl: './desktop-filter.component.html',
   styleUrl: './desktop-filter.component.scss',
-  providers: [FilterViewModel]
 })
 export class DesktopFilterComponent {
 
   constructor(
-    private filterModel: FilterViewModel
+    protected filterModel: FilterViewModel
   ){
 
   }

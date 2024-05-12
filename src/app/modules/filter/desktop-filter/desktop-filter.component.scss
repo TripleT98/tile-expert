@@ -1,0 +1,98 @@
+@import "variables.scss";
+
+$left-block-padding-side: 16px;
+
+@mixin flexCenter{
+  display: flex;
+  align-items: center;
+}
+
+$height: 228px;
+$section-height: calc($height / 3);
+
+:host{
+  display: block;
+  width: 704px;
+  height: $height;
+  color: $text-color;
+  border-radius: 4px;
+  box-shadow: 0 0 10px grey;
+}
+
+.filter.desktop{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  color: black !important;
+}
+
+.side{
+  height: 100%;
+}
+
+.right{
+  width: 66%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 24px;
+  .select, .search-string{
+    height: $section-height;
+  }
+  .select{
+    column-gap: 8px;
+  }
+}
+
+.single{
+  mat-checkbox{
+    margin-right: 8px;
+  }
+  p{
+    color: #000;
+  }
+}
+
+.multi{
+  @include flexCenter;
+}
+
+.search-string{
+  display: flex;
+  align-items: end;
+  mat-form-field{
+    width: 100%;
+  }
+}
+
+.left{
+  width: 34%;
+  padding: 20px 16px 0;
+  position: relative;
+  &::after{
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    height: 20px;
+    width: calc(100% - $left-block-padding-side * 2);
+    background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,.8) 80%, rgba(254,254,254,0) 100%);
+  }
+  .history{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    h3{
+      font-size: 15px;
+      color: $disable-text-color;
+      font-weight: 400;
+      position: sticky;
+      top: 0px;
+      background: #FFF;
+    }
+    ul{
+      li{
+        margin-top: 12px;
+        line-height: 20px;
+      }
+    }
+  }
+}

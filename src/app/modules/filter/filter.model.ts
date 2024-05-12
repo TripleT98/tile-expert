@@ -1,14 +1,16 @@
 import { Injectable } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, AbstractControl } from "@angular/forms";
 import { Selectitem } from '@shared/models/select-items.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class FilterViewModel {
 
   public filterForm = new FormGroup({
     searchField: new FormControl(null),
-    multiSelect: new FormControl(null),
-    singleSelect: new FormControl(null)
+    multiSelect: new FormGroup({}),
+    singleSelect: new FormGroup({})
   })
 
   public multiSelectItems: Selectitem[] = [
@@ -41,10 +43,50 @@ export class FilterViewModel {
     }
   ]
 
+  public history: string[] = [
+    "Закрыть теги",
+    "Кнопка",
+    "Приложение",
+    "Форма",
+    "Текстовое поле",
+    "Закрыть теги",
+    "Кнопка",
+    "Приложение",
+    "Форма",
+    "Текстовое поле",
+  ]
+
+  public searchPlaceholder: string = "Имя или должность"
+  public searchLabel: string = "Автор"
+
   constructor(
 
   ){
+    this.initForm(this.multiSelectItems, this.filterForm.controls.multiSelect);
+    this.initForm(this.singleSelectItems, this.filterForm.controls.singleSelect);
+    //this.filterForm.valueChanges.subscribe(console.log)
+  }
 
+  private initForm(items: Selectitem[], form: FormGroup){
+    items.forEach(item => {
+      form.addControl(String(item.id), new FormControl(false));
+    })
+  }
+
+  public singleFormChange(itemId: number){
+    const controls: Record<string, FormControl> = this.filterForm.controls.singleSelect.controls;
+    const control: FormControl = controls['' + itemId];
+    const value = control.value;
+    if (!value) {
+      return;
+    }
+    for(let i in controls){
+      const anotherControl = controls[i];
+      if (control === anotherControl){
+        continue;
+      }
+      anotherControl.setValue(false);
+    }
   }
 
 }

@@ -28,12 +28,25 @@
       [expandTo]="titleCont"
       [expandTrigger]="searchContainer"
       [triggerEvent]="'click'"
-      (statusChange)="onExpand($event)"
+      (statusChange)="onAnimStatusChanges($event)"
+      (expandStatusChange)="onExpandStatusChanges($event)"
+      [ngClass]="{expanding: animationStatus !== 0, full: isExpanded, closed: !isExpanded}"
     >
-      <mat-form-field appearance="outline" class="search input">
-        <input matInput [formControl]="searchForm" type="text">
+      <mat-form-field appearance="outline" class="search input with-infix">
+        <input
+          matInput
+          [formControl]="searchForm"
+          type="text"
+          [placeholder]="searchPlaceholder"
+          (click)="openDropdown()"
+        >
       </mat-form-field>
       <button mat-raised-button class="search">НАЙТИ</button>
+      <app-desctop-filter
+        *ngIf="showDropdownPanel"
+        [style.width]="'100%'"
+        class="dropdown"
+      ></app-desctop-filter>
     </div>
     <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: 'add'}"></ng-container>
   </div>

@@ -13,7 +13,11 @@ export class MainComponent implements AfterViewInit {
   @ViewChild('titleCont') titleContainer!: ElementRef;
 
   protected readonly searchForm = new FormControl(null);
-  protected searchFiedStatus: AnimStatus = AnimStatus['stopped'];
+  protected animationStatus: AnimStatus = AnimStatus['stopped'];
+  protected isExpanded: boolean = false;
+  protected showDropdownPanel: boolean = false;
+
+  protected searchPlaceholder: string = "Поисковый запрос";
 
   protected navBarItems: NavBarItem[] = [
     {
@@ -46,9 +50,26 @@ export class MainComponent implements AfterViewInit {
   ngAfterViewInit(){
   }
 
-  onExpand(status: AnimStatus){
-    console.log(status)
-    this.searchFiedStatus = status
+  protected onExpandStatusChanges(status: boolean){
+    this.isExpanded = status;
+  }
+
+  protected onAnimStatusChanges(status: AnimStatus){
+    this.animationStatus = status;
+    if (status === AnimStatus["backward"]) {
+      this.closeDropdown();
+    }
+  }
+
+  protected openDropdown(){
+    if (!this.isExpanded || this.showDropdownPanel){
+      return;
+    }
+    this.showDropdownPanel = true;
+  }
+
+  protected closeDropdown(){
+    this.showDropdownPanel = false;
   }
 
 }

@@ -1,27 +1,60 @@
-<div class="fitler desktop">
-  <div class="left-side">
-    <ng-container></ng-container>
+<div class="filter desktop">
+  <div class="left side">
+    <ng-container [ngTemplateOutlet]="history"></ng-container>
   </div>
-    <mat-divider></mat-divider>
+    <mat-divider vertical></mat-divider>
   <div class="right side">
-    <ng-container></ng-container>
-    <ng-container></ng-container>
-    <ng-container></ng-container>
+    <ng-container [ngTemplateOutlet]="searchString"></ng-container>
+    <ng-container [ngTemplateOutlet]="multiSelect"></ng-container>
+    <ng-container [ngTemplateOutlet]="singleSelect"></ng-container>
   </div>
 </div>
 
 <ng-template #searchString>
-  <div class="search-string"></div>
+  <div class="search-string">
+    <div [style]="{height: '48px', width: '100%'}">
+      <mat-form-field appearance="outline" class="search with-label with-suffix">
+        <mat-label>{{filterModel.searchLabel}}</mat-label>
+        <input
+          matInput
+          [formControl]="filterModel.filterForm.controls.searchField"
+          [placeholder]="filterModel.searchPlaceholder"
+          >
+          <app-svg-icon matSuffix [name]="'yandex'"></app-svg-icon>
+      </mat-form-field>
+    </div>
+  </div>
 </ng-template>
 
 <ng-template #multiSelect>
-  <div class="search-string"></div>
+  <div class="multi select">
+    <mat-checkbox
+      *ngFor="let item of filterModel.multiSelectItems"
+      [formControl]="filterModel.filterForm.controls.multiSelect.controls['' + item.id]"
+    >
+      {{item.name}}
+    </mat-checkbox>
+  </div>
 </ng-template>
 
 <ng-template #singleSelect>
-  <div class="search-string"></div>
+  <div class="single select">
+    <p>Только</p>
+    <mat-checkbox
+      *ngFor="let item of filterModel.singleSelectItems"
+      [formControl]="filterModel.filterForm.controls.singleSelect.controls['' + item.id]"
+      (change)="filterModel.singleFormChange(item.id)"
+    >
+      {{item.name}}
+    </mat-checkbox>
+  </div>
 </ng-template>
 
 <ng-template #history>
-  <div class="search-string"></div>
+  <div class="history">
+    <h3>История</h3>
+    <ul>
+      <li *ngFor="let item of filterModel.history">{{item}}</li>
+    </ul>
+  </div>
 </ng-template>

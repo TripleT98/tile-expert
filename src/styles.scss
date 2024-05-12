@@ -1,4 +1,4 @@
-@import "@angular/material/prebuilt-themes/pink-bluegrey.css";
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
 @import "variables.scss";
 @import "./assets/scss/material/material.scss";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@200;300;400;500;600;700&display=swap');
@@ -8,6 +8,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: Roboto;
+  font-size: 14px;
 }
 
 body{

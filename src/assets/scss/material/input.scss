@@ -1,20 +1,44 @@
 @import "variables.scss";
 
+$suffix-x-transform: -12px;
+
 .mat-mdc-form-field{
   .mat-mdc-input-element{
     color: $text-color !important;
+  }
+  &.with-suffix{
+    .mat-mdc-form-field-icon-suffix{
+      transform: translate($suffix-x-transform, 1px);
+    }
+    .mat-mdc-form-field-infix{
+      .mat-mdc-input-element{
+        width: 94%;
+      }
+    }
+  }
+  &.with-infix{
+    .mat-mdc-form-field-icon-suffix{
+      //transform: translate($suffix-x-transform, 1px);
+    }
+    // .mat-mdc-form-field-infix{
+    //   .mat-mdc-input-element{
+    //     width: 94%;
+    //   }
+    // }
   }
 }
 
 .mat-mdc-form-field.search{
   height: 100%;
+  &:not(.with-label){
+    .mat-mdc-form-field-infix{
+      transform: translateY(-4px);
+    }
+  }
   .mat-mdc-text-field-wrapper{
     height: 100%;
     .mat-mdc-form-field-flex{
       height: 100%;
-      .mat-mdc-form-field-infix{
-        transform: translateY(-4px);
-      }
     }
   }
 }
