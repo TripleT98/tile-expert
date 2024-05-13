@@ -1,0 +1,45 @@
+@mixin flexColumn{
+  display: flex;
+  flex-direction: column;
+}
+
+:host{
+  display: block;
+}
+
+.filter{
+  @include flexColumn;
+  row-gap: 28px;
+  padding: 16px;
+}
+
+.head{
+  height: 48px;
+  display: flex;
+  .search{
+    flex-grow: 1;
+    margin-left: 24px;
+  }
+  .back{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+}
+
+.main{
+  @include flexColumn;
+  row-gap: 22px;
+}
+
+.search{
+  width: 100%;
+}
+
+.select{
+  @include flexColumn;
+  row-gap: 4px;
+  .check-container{
+    width: 24px;
+  }
+}

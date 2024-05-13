@@ -1,11 +1,15 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { FormGroup, FormControl, AbstractControl } from "@angular/forms";
 import { Selectitem } from '@shared/models/select-items.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FilterViewModel {
+export class FilterViewModel implements OnDestroy {
+
+  ngOnDestroy(): void {
+    console.log('Destroy')
+  }
 
   public filterForm = new FormGroup({
     searchField: new FormControl(null),

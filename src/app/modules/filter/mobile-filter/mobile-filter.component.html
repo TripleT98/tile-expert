@@ -1,0 +1,68 @@
+<div class="filter mobile">
+  <div class="head">
+    <div class="back">
+      <app-svg-icon
+        [matTooltip]="'Назад'"
+        [name]="'back'"
+        (click)="mainVM.onExpandStatusChanges(false);mainVM.closeDropdown()"
+      ></app-svg-icon>
+    </div>
+    <mat-form-field appearance="fill" class="search">
+      <input
+        matInput
+        [formControl]="mainVM.searchForm"
+        type="text"
+        [placeholder]="mainVM.mobileSearchPlaceholder"
+      >
+    </mat-form-field>
+  </div>
+  <div class="main">
+    <ng-container [ngTemplateOutlet]="searchString"></ng-container>
+    <ng-container [ngTemplateOutlet]="multiSelect"></ng-container>
+    <ng-container [ngTemplateOutlet]="singleSelect"></ng-container>
+  </div>
+</div>
+
+<ng-template #searchString>
+  <div class="search-string">
+    <div [style]="{height: '48px', width: '100%'}">
+      <mat-form-field appearance="outline" class="search with-label with-suffix">
+        <mat-label>{{filterModel.searchLabel}}</mat-label>
+        <input
+          matInput
+          [formControl]="filterModel.filterForm.controls.searchField"
+          [placeholder]="filterModel.searchPlaceholder"
+          >
+          <app-svg-icon matSuffix [name]="'yandex'"></app-svg-icon>
+      </mat-form-field>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #multiSelect>
+  <div class="multi select">
+    <div class="check-container" *ngFor="let item of filterModel.singleSelectItems">
+      <mat-checkbox
+        [formControl]="filterModel.filterForm.controls.multiSelect.controls['' + item.id]"
+      >
+        {{item.name}}
+      </mat-checkbox>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #singleSelect>
+  <div class="single">
+    <p>Только</p>
+    <div class="checkboxes select">
+      <div class="check-container" *ngFor="let item of filterModel.singleSelectItems">
+        <mat-checkbox
+          [formControl]="filterModel.filterForm.controls.singleSelect.controls['' + item.id]"
+          (change)="filterModel.singleFormChange(item.id)"
+        >
+          {{item.name}}
+        </mat-checkbox>
+      </div>
+    </div>
+  </div>
+</ng-template>
