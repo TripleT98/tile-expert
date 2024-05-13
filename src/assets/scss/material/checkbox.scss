@@ -1,10 +1,30 @@
 @import "variables.scss";
 
+.mat-mdc-checkbox-checked{
+  .mdc-checkbox__background{
+    background-color: $main-color !important;
+    border-color: $main-color !important;
+  }
+}
+
 .mat-mdc-checkbox{
   .mdc-label{
     color: $text-color;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+}
+
+.mobile{
+  .mdc-checkbox__background{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    transform: translate(-3px, -3px);
+  }
+
+  .mdc-checkbox__checkmark{
+    transform: scale(0.7);
   }
 }

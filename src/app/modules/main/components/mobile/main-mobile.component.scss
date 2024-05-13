@@ -1,0 +1,23 @@
+.title{
+  margin-left: 16px;
+}
+
+.main-header{
+  width: 100%;
+}
+
+.cover-layout{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: #FFF;
+  z-index: 2;
+}
+
+.search-block{
+  flex-shrink: 1;
+  flex-grow: 1;
+  column-gap: 0;
+  justify-content: space-around;
+  margin: 0;
+}

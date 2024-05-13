@@ -1,1 +1,3 @@
-<app-main></app-main>
+  <app-main *ngIf="currentScreenSize !== 'XSmall'"></app-main>
+  <app-main-mobile *ngIf="currentScreenSize === 'XSmall'"></app-main-mobile>
+

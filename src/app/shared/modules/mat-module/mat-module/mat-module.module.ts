@@ -29,6 +29,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { LayoutModule } from '@angular/cdk/layout';
 
 const mat_module = [
 	MatBadgeModule,
@@ -62,6 +63,7 @@ const mat_module = [
 	MatTreeModule,
 	MatChipsModule,
   CommonModule,
+  LayoutModule,
 
 	ReactiveFormsModule,
 	FormsModule,

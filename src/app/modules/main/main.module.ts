@@ -3,7 +3,8 @@ import { MaterialModule } from '@shared/modules/mat-module/mat-module/mat-module
 import { SharedComponentsModule } from '@shared/modules/shared-components/shared-components.module';
 import { DirectivesModule } from '@shared/modules/directives-module/directives.module';
 import { FilterModule } from '@modules/filter/filter.module';
-import { MainComponent } from './main.component';
+import { MainComponent } from './components/desktop/main.component';
+import { MainMobileComponent } from './components/mobile/main-mobile.component';
 
 
 @NgModule({
@@ -14,10 +15,12 @@ import { MainComponent } from './main.component';
     FilterModule,
 	],
 	declarations: [
-		MainComponent
+		MainComponent,
+    MainMobileComponent
 	],
 	exports: [
-		MainComponent
+		MainComponent,
+    MainMobileComponent
 	]
 })
 export class MainModule {}

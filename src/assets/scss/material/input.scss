@@ -42,3 +42,12 @@ $suffix-x-transform: -12px;
     }
   }
 }
+
+.mat-form-field-appearance-fill.search{
+  .mat-mdc-form-field-subscript-wrapper, .mdc-line-ripple{
+    display: none;
+  }
+  .mat-mdc-text-field-wrapper{
+    border-radius: 24px;
+  }
+}

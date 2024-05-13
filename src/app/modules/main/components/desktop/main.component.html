@@ -10,7 +10,7 @@
 
 <ng-template #navBarTemp>
   <div class="nav-bar">
-    <div *ngFor="let item of navBarItems" class="nav-bar_item">
+    <div *ngFor="let item of mainVM.navBarItems" class="nav-bar_item">
       <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: item.iconName}"></ng-container>
       <span>{{item.name}}</span>
     </div>
@@ -29,22 +29,22 @@
       [expandTo]="titleCont"
       [expandTrigger]="searchContainer"
       [triggerEvent]="'click'"
-      (statusChange)="onAnimStatusChanges($event)"
-      (expandStatusChange)="onExpandStatusChanges($event)"
-      [ngClass]="{expanding: animationStatus !== 0, full: isExpanded, closed: !isExpanded}"
+      (statusChange)="mainVM.onAnimStatusChanges($event)"
+      (expandStatusChange)="mainVM.onExpandStatusChanges($event)"
+      [ngClass]="{expanding: mainVM.animationStatus !== 0, full: mainVM.isExpanded, closed: !mainVM.isExpanded}"
     >
       <mat-form-field appearance="outline" class="search input with-infix">
         <input
           matInput
-          [formControl]="searchForm"
+          [formControl]="mainVM.searchForm"
           type="text"
-          [placeholder]="searchPlaceholder"
-          (click)="openDropdown()"
+          [placeholder]="mainVM.searchPlaceholder"
+          (click)="mainVM.openDropdown()"
         >
       </mat-form-field>
       <button mat-raised-button class="search">НАЙТИ</button>
       <app-desctop-filter
-        *ngIf="showDropdownPanel"
+        *ngIf="mainVM.showDropdownPanel"
         [style.width]="'100%'"
         class="dropdown"
       ></app-desctop-filter>

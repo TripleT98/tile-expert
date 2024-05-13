@@ -1,0 +1,29 @@
+<div class="main-header">
+  <app-mobile-filter
+    *ngIf="mainVM.showDropdownPanel"
+    [style.width]="'100%'"
+    class="cover-layout"
+  ></app-mobile-filter>
+  <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: 'nav'}"></ng-container>
+  <div #titleCont class="title">
+    <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: 'title'}"></ng-container>
+  </div>
+  <ng-container [ngTemplateOutlet]="searchBlock"></ng-container>
+</div>
+
+<ng-template #searchBlock>
+  <div class="search-block">
+    <div #searchContainer (click)="mainVM.onExpandStatusChanges(true);mainVM.openDropdown()">
+      <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: 'search'}"></ng-container>
+    </div>
+    <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: 'add'}"></ng-container>
+    <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: 'history'}"></ng-container>
+    <ng-container [ngTemplateOutlet]="svgIconTemp" [ngTemplateOutletContext]="{name: 'alarm'}"></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #svgIconTemp let-name="name">
+  <div class="svg-icon">
+    <app-svg-icon [name]="name"></app-svg-icon>
+  </div>
+<ng-template>
